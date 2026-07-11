@@ -1,140 +1,437 @@
-<html>
-  <head>
-    <title>SALVUS SYSTEMS | HOME</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <meta name="description" content="Salvus Systems develops custom software solutions and aircraft maintenance knowledge management tools.">
-    <meta name="theme-color" content="#003366">
-    <link rel="stylesheet" href="w3.css">
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SALVUS SYSTEMS | HOME</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Salvus Systems develops custom software solutions and aircraft maintenance knowledge management tools.">
+  <meta name="theme-color" content="#000438">
+  <link rel="stylesheet" href="w3.css">
+
   <style>
-    .w3-navy {
-      background-color: #000438;
-      color: white
+    :root {
+      --navy: #000438;
+      --black: #000000;
+      --white: #ffffff;
+      --light-gray: #f5f5f5;
+      --border: #dddddd;
+      --page-width: 1200px;
     }
-    .spacer {
-      background-color: black;
-      width: calc(100% + 32px);
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+      color: #171717;
+    }
+
+    /* Prevent the fixed navbar from covering anchored sections */
+    section,
+    header {
+      scroll-margin-top: 72px;
+    }
+
+    /* Navbar */
+    .navbar {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      letter-spacing: 4px;
+      white-space: nowrap;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 640px;
+      margin-top: 64px;
+      padding: 48px 32px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(
+          120deg,
+          #000000 0%,
+          #000000 60%,
+          #014017 100%
+        );
+      color: var(--white);
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: var(--page-width);
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      display: inline-block;
+      margin: 0;
+      padding: 14px 18px;
+      background: var(--black);
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: 4px;
+    }
+
+    .hero-tagline {
+      margin: 18px 0 0 18px;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      letter-spacing: 1px;
+    }
+
+    /* General page sections */
+    .page-section {
+      width: 100%;
+      max-width: var(--page-width);
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+
+    .page-section h2 {
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+      letter-spacing: 1px;
+    }
+
+    .section-divider {
+      width: calc(100% - 48px);
+      max-width: calc(var(--page-width) - 48px);
+      margin: 0 auto;
+      border: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-text {
+      max-width: 850px;
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    /* Responsive card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .info-card {
+      min-width: 0;
       height: 100%;
-      margin-left: -16px
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid #eeeeee;
+      border-radius: 4px;
     }
-    .pad {
-      padding-left: 16px;
-      padding-top: 8px
+
+    .info-card h3 {
+      margin: 0;
+      padding: 20px 20px 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
-    .margin {
-      margin-left: 16px
+
+    .card-body {
+      flex: 1;
+      padding: 4px 20px 22px;
+      line-height: 1.6;
     }
-    .height1 {
-      height: 120px
+
+    .card-body p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    /* Contact section */
+    .contact-section {
+      background: var(--light-gray);
+    }
+
+    .contact-card a {
+      display: inline-block;
+      margin-bottom: 14px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .contact-description {
+      font-size: 0.85rem;
+      color: #555555;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* Tablets */
+    @media screen and (max-width: 900px) {
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card-grid .info-card:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .hero {
+        min-height: 520px;
+      }
+    }
+
+    /* Phones */
+    @media screen and (max-width: 600px) {
+      .navbar {
+        min-height: 56px;
+      }
+
+      .brand {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+      }
+
+      .nav-demo {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+
+      .hero {
+        min-height: 420px;
+        margin-top: 56px;
+        padding: 40px 18px;
+      }
+
+      .hero-title {
+        display: block;
+        width: fit-content;
+        padding: 12px 14px;
+        font-size: 2rem;
+        letter-spacing: 2px;
+      }
+
+      .hero-tagline {
+        margin-left: 4px;
+        font-size: 1rem;
+        margin-left: 8px
+      }
+
+      .page-section {
+        padding: 40px 18px;
+      }
+
+      .section-divider {
+        width: calc(100% - 36px);
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .card-grid .info-card:last-child {
+        grid-column: auto;
+      }
+
+      .info-card h3 {
+        padding: 18px 18px 10px;
+      }
+
+      .card-body {
+        padding: 4px 18px 20px;
+      }
+
+      .about-text {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      footer {
+        padding-left: 18px;
+        padding-right: 18px;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Very narrow phones */
+    @media screen and (max-width: 380px) {
+      .brand {
+        font-size: 0.78rem;
+        letter-spacing: 1px;
+      }
+
+      .nav-demo {
+        font-size: 0.85rem;
+      }
+
+      .hero-title {
+        font-size: 1.7rem;
+      }
     }
   </style>
-  <body>
-    <!-- Navbar -->
-    <div class="w3-top">
-      <div class="w3-bar w3-black w3-wide w3-padding w3-card">
-        <a href="#home" class="w3-bar-item w3-button w3-hover-black"><b>SALVUS</b> SYSTEMS</a>
-        <!-- Float links to the right. Hide them on small screens -->
-        <div class="w3-right w3-hide-small">
-          <a href="#about" class="w3-bar-item w3-button">About</a>
-          <a href="#core" class="w3-bar-item w3-button">Core Capabilities</a>
-          <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-        </div>
-      </div>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="w3-top">
+    <div class="navbar w3-black w3-wide w3-card">
+      <a href="#home" class="brand w3-bar-item w3-button w3-hover-black"><b>SALVUS</b> SYSTEMS</a>
+      <!-- <a href="/demo.html" class="nav-demo w3-bar-item w3-button w3-hover-dark-grey">Demo</a> -->
     </div>
+  </nav>
 
-    <!-- Head -->
-    <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
-      <div class="spacer"></div>
-      <div class="w3-display-left w3-margin-top w3-center">
-        <h1 class="w3-xxlarge w3-text-white">
-          <span class="w3-left w3-padding w3-black"><b>SALVUS</b> SYSTEMS</span>
-        </h1>
-        <!-- Nehemiah 2:18 -->
-        <span class="w3-left w3-text-white margin"><i>Here I am. Send me.</i></span>
-      </div>
-    </header>
+  <!-- Hero -->
+  <header class="hero" id="home">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <b>SALVUS</b> SYSTEMS
+      </h1>
 
-    <div class="w3-row-padding w3-container" id="about">
+      <p class="hero-tagline">
+        <i>Here I am. Send me.</i>
+      </p>
+    </div>
+  </header>
+
+  <!-- About -->
+  <main>
+    <section class="page-section" id="about">
       <h2>About</h2>
-      <p>Salvus Systems develops software and information management systems for organizations that operate in complex technical environments.<br><br>We focus on building tools that improve access to information, reduce administrative burden, and support efficient day-to-day operations. Our approach emphasizes simplicity, reliability, and practical functionality over unnecessary complexity.<br><br>From custom software development to specialized web-based platforms, we create solutions designed to solve real operational challenges and deliver lasting value.</p>
-    </div> <hr>
+
+      <p class="about-text">
+        Salvus Systems develops software and information management
+        systems for organizations that operate in complex technical
+        environments.
+        <br><br>
+        We focus on building tools that improve access to information,
+        reduce administrative burden, and support efficient day-to-day
+        operations. Our approach emphasizes simplicity, reliability,
+        and practical functionality over unnecessary complexity.
+        <br><br>
+        From custom software development to specialized web-based
+        platforms, we create solutions designed to solve real
+        operational challenges and deliver lasting value.
+      </p>
+    </section>
+
+    <hr class="section-divider">
 
     <!-- Core Capabilities -->
-    <div class="w3-row-padding" id="core">
+    <section class="page-section" id="core">
       <h2>Core Capabilities</h2>
-      <div class="w3-third">
-        <div class="w3-card-2 height1">
-          <h4 class="pad">Knowledge Systems</h4>
-          <div class="w3-container w3-center">
-            <p>Custom software that focuses on memory retention and quick access information.</p>
+
+      <div class="card-grid">
+        <article class="info-card w3-card-2">
+          <h3>Knowledge Systems</h3>
+
+          <div class="card-body">
+            <p>
+              Custom software focused on information retention,
+              organization, and rapid access to technical knowledge.
+            </p>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <div class="w3-third">
-        <div class="w3-card-2 height1">
-          <h4 class="pad">Web Development</h4>
-          <div class="w3-container w3-center">
-            <p>Creating simple to use, offline, and secure portals with tools and references for aircraft maintainers.</p>
+        <article class="info-card w3-card-2">
+          <h3>Web Development</h3>
+
+          <div class="card-body">
+            <p>
+              Simple, secure, and offline-capable portals containing
+              tools and references for personnel working in technical
+              environments.
+            </p>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <div class="w3-third">
-        <div class="w3-card-2 height1">
-          <h4 class="pad">Software Development</h4>
-          <div class="w3-container w3-center">
-            <p>Easy to use front ends and encrypted backend to keep logistic information secure.</p>
+        <article class="info-card w3-card-2">
+          <h3>Software Development</h3>
+
+          <div class="card-body">
+            <p>
+              Practical front-end systems supported by secure data
+              management and encrypted storage solutions.
+            </p>
           </div>
-        </div>
+        </article>
       </div>
+    </section>
 
-    </div><hr>
+    <hr class="section-divider">
 
-    <div class="w3-row-padding" id="contact">
-      <h2>Contact</h2>
-      <div class="w3-third">
-        <div class="w3-card-2">
-          <h4 class="pad">Customer Support</h4>
-          <div class="w3-container w3-center">
-            <div class="w3-left" style="width: 100%; height: 35px; text-align: left!important">
-              <a href="mailto:support@salvussystems.us">support@salvussystems.us</a>
+    <!-- Contact -->
+    <section class="contact-section">
+      <div class="page-section" id="contact">
+        <h2>Contact</h2>
+
+        <div class="card-grid">
+          <article class="info-card contact-card w3-card-2">
+            <h3>Customer Support</h3>
+
+            <div class="card-body">
+              <a href="mailto:support@salvussystems.us">
+                support@salvussystems.us
+              </a>
+
+              <p class="contact-description">
+                For customer questions, technical assistance,
+                complaints, or suggestions.
+              </p>
             </div>
-            <p style="font-size: 11px">Only for use by customers with complaints, questions, or suggestions.</p>
-          </div>
-        </div>
-      </div>
+          </article>
 
-      <div class="w3-third">
-        <div class="w3-card-2">
-          <h4 class="pad">Software Development</h4>
-          <div class="w3-container w3-center">
-            <div class="w3-left" style="width: 100%; height: 35px; text-align: left!important">
-              <a href="mailto:development@salvussystems.us">development@salvussystems.us</a>
+          <article class="info-card contact-card w3-card-2">
+            <h3>Software Development</h3>
+
+            <div class="card-body">
+              <a href="mailto:development@salvussystems.us">
+                development@salvussystems.us
+              </a>
+
+              <p class="contact-description">
+                For software development inquiries, technical
+                questions, and potential projects.
+              </p>
             </div>
-            <p style="font-size: 11px">For software problems or questions only.</p>
-          </div>
-        </div>
-      </div>
+          </article>
 
-      <div class="w3-third">
-        <div class="w3-card-2">
-          <h4 class="pad">Defense Support</h4>
-          <div class="w3-container w3-center">
-            <div class="w3-left" style="width: 100%; height: 35px; text-align: left!important">
-              <a href="mailto:defense@salvussystems.us">defense@salvussystems.us</a>
+          <article class="info-card contact-card w3-card-2">
+            <h3>Defense</h3>
+
+            <div class="card-body">
+              <a href="mailto:defense@salvussystems.us">
+                defense@salvussystems.us
+              </a>
+
+              <p class="contact-description">
+                Department of War and government point of contact.
+              </p>
             </div>
-            <p style="font-size: 11px">DoW Point of Contact</p>
-          </div>
+          </article>
         </div>
       </div>
-    </div><br>
+    </section>
+  </main>
 
-    <!-- Footer -->
-    <footer class="w3-center w3-black w3-padding-16">
-      <p>SALVUS SYSTEMS LLC © All Rights Reserved</p>
-    </footer>
-
-  </body>
+  <!-- Footer -->
+  <footer class="w3-center w3-black w3-padding-24">
+    <p>SALVUS SYSTEMS LLC © All Rights Reserved</p>
+  </footer>
+</body>
 </html>
