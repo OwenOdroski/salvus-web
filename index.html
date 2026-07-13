@@ -8,6 +8,7 @@
   <meta name="description" content="Salvus Systems develops custom software solutions and aircraft maintenance knowledge management tools.">
   <meta name="theme-color" content="#000438">
   <link rel="stylesheet" href="w3.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <style>
     :root {
@@ -74,6 +75,7 @@
       width: 100%;
       max-width: var(--page-width);
       margin: 0 auto;
+      background-color: transparent
     }
 
     .hero-title {
@@ -84,6 +86,11 @@
       font-size: clamp(2rem, 5vw, 4.5rem);
       line-height: 1.05;
       letter-spacing: 4px;
+    }
+    #logo2 {
+      height: 6.9rem;
+      margin-top: -3px;
+      margin-left: -50px
     }
 
     .hero-tagline {
@@ -223,14 +230,22 @@
         display: block;
         width: fit-content;
         padding: 12px 14px;
-        font-size: 2rem;
+        font-size: 1.7rem;
         letter-spacing: 2px;
+        margin-left: 16px
+      }
+
+      #logo2 {
+        height: 3.9rem;
+        margin-top: -3px;
+        margin-left: -50px
       }
 
       .hero-tagline {
         margin-left: 4px;
         font-size: 1rem;
-        margin-left: 8px
+        margin-left: 15px;
+        margin-top: -8px
       }
 
       .page-section {
@@ -285,6 +300,14 @@
         font-size: 1.7rem;
       }
     }
+    #logo {
+      width: 25px;
+      margin-top: -3px;
+      margin-right: 3px
+    }
+    #margin1 {
+      margin-right: -2px
+    }
   </style>
 </head>
 
@@ -292,7 +315,7 @@
   <!-- Navbar -->
   <nav class="w3-top">
     <div class="navbar w3-black w3-wide w3-card">
-      <a href="#home" class="brand w3-bar-item w3-button w3-hover-black"><b>SALVUS</b> SYSTEMS</a>
+      <a href="#home" class="brand w3-bar-item w3-button w3-hover-black"><img src="logo.svg" id="logo"><b id="margin1">SALVUS</b> SYSTEMS</a>
       <!-- <a href="/demo.html" class="nav-demo w3-bar-item w3-button w3-hover-dark-grey">Demo</a> -->
     </div>
   </nav>
@@ -301,7 +324,7 @@
   <header class="hero" id="home">
     <div class="hero-content">
       <h1 class="hero-title">
-        <b>SALVUS</b> SYSTEMS
+        <img src="logo.svg" id="logo2"><b>SALVUS</b> SYSTEMS
       </h1>
 
       <p class="hero-tagline">
