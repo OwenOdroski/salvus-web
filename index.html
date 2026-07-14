@@ -18,6 +18,8 @@
       --light-gray: #f5f5f5;
       --border: #dddddd;
       --page-width: 1200px;
+      --accent: #32d46a;
+      --accent-hover: #26b85a;
     }
 
     * {
@@ -82,7 +84,6 @@
       display: inline-block;
       margin: 0;
       padding: 14px 18px;
-      background: var(--black);
       font-size: clamp(2rem, 5vw, 4.5rem);
       line-height: 1.05;
       letter-spacing: 4px;
@@ -308,6 +309,20 @@
     #margin1 {
       margin-right: -2px
     }
+    button {
+      width: auto;
+      cursor: pointer;
+      background: var(--accent);
+      font-weight: 600;
+      margin-right: 8px;
+      margin: 6px 0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.95rem;
+      transition: 0.15s ease;
+      color: black
+    }
   </style>
 </head>
 
@@ -316,7 +331,6 @@
   <nav class="w3-top">
     <div class="navbar w3-black w3-wide w3-card">
       <a href="#home" class="brand w3-bar-item w3-button w3-hover-black"><img src="logo.svg" id="logo"><b id="margin1">SALVUS</b> SYSTEMS</a>
-      <!-- <a href="/demo.html" class="nav-demo w3-bar-item w3-button w3-hover-dark-grey">Demo</a> -->
     </div>
   </nav>
 
@@ -328,7 +342,8 @@
       </h1>
 
       <p class="hero-tagline">
-        <i>Here I am. Send me.</i>
+        <i>Here I am. Send me.</i><br><br>
+        <button onclick="document.location.href='/demo.html'">View Demo</button>
       </p>
     </div>
   </header>

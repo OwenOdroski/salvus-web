@@ -1,8 +1,335 @@
 <html>
   <head>
     <title>DEMO | SALVUS SYSTEMS</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="This is a demo created by Salvus Systems to demonstrate the ability to develop usefull references for aircraft maintainers">
+    <meta name="theme-color" content="#000438">
+    <link rel="stylesheet" href="w3.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
   </head>
+  <style>
+  :root {
+    --bg: #0f1316;
+    --surface: #171d21;
+    --surface-hover: #1d252a;
+
+    --text: #edf3f7;
+    --text-muted: #aab5bf;
+
+    --accent: #32d46a;
+    --accent-hover: #26b85a;
+
+    --border: #283238;
+    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+
+    --radius: 10px;
+    }
+
+    * {
+    box-sizing: border-box;
+    }
+
+    body {
+    margin: 0;
+    padding: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+    }
+
+    #canvas {
+    position: fixed;
+    inset: 0;
+    }
+
+    .feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: var(--shadow);
+    }
+
+    .feature h2 {
+    margin: 0 0 14px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    }
+
+    input,
+    select,
+    button {
+    width: 100%;
+    margin: 6px 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #11171a;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: 0.15s ease;
+    }
+
+    input::placeholder {
+    color: var(--text-muted);
+    }
+
+    input:focus,
+    select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(50, 212, 106, 0.18);
+    }
+
+    button {
+    width: auto;
+    cursor: pointer;
+    background: var(--accent);
+    color: #08100b;
+    font-weight: 600;
+    border: none;
+    margin-right: 8px;
+    }
+
+    button:hover {
+    background: var(--accent-hover);
+    }
+
+    p {
+    margin: 8px 0 0;
+    color: var(--text-muted);
+    }
+
+    #torque-canvas {
+      max-width: 320px;
+      display: block;
+      margin: 12px auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #11171a;
+      float: left
+    }
+
+    #to-output,
+    #wuc-output,
+    #phone-output {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #11171a;
+      min-height: 42px;
+    }
+    .nounder {
+      text-decoration: none;
+      font-size: 20px
+    }
+    #blurback {
+      background: rgba(20, 25, 30, 0.45); /* Must be transparent */
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); /* Safari */
+      z-index: 100;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none
+    }
+    #alert {
+      z-index: 101;
+      height: auto;
+      width: 50%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      height: 50%;
+      transform: translate(-50%, -50%);
+      height: 50%;
+      display: none;
+      flex-direction: column;
+    }
+    #alert button {
+      width: 40px;
+      margin-left: auto
+    }
+    .x-symbol {
+      float: right;
+      z-index: 50
+    }
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 50;
+      display: none;
+      color: black;
+      padding: 8px
+    }
+    .popup p {
+      color: black
+    }
+    @media (max-width: 800px) {
+      #alert {
+        width: calc(100% - 32px);
+      }
+  }
+  .top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 100;
+  }
+  .thick {
+    font-size: 30px;
+    position: relative;
+    display: inline;
+    top: 6px
+  }
+  .res {
+    height: 200px;
+    overflow-y: auto
+  }
+  </style>
   <body>
-    <p>A demo is currently under development.</p>
+    <div class="popup" id="3Dtool">
+      <div class="top-bar">
+        <input type="text" placeholder="Search Panel" style="width: 150px; margin-left: 8px; background-color: gray; border: none">
+        <button>Search</button>
+        <a class="nounder" href="javascript:openText('3D Enviroment', 'The 3D enviroment includes 3 features: 3D panel chart, cockpit panel chart, and spatial index. <br><br> <u>Panel Chart</u><br><br>Panels have a dedicated code on them that maintainers routinely use. This makes it incredibly easy to locate panels. <br><br> <u>Cockpit Panel Chart</u><br><br>This is a 3D model of the cockpit that shows all switched and fault lights. Each switch and fault light has a description of what they do and how they work. Used for knowledge of systems, not troubleshooting advice. <br><br> <u>Spatial Index</u><br><br> This has a 3D model of every major component. It will show part numbers, WUCs, TO references, subcomponents or related components (including their part numbers and applicable TO), and any other related information that would be helpful for a maintainer.')"><div class="thick">ⓘ</div></a>
+        <button onclick="document.getElementById('3Dtool').style.display='none'" style="float: right">Close</button>
+      </div>
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <!-- Warning -->
+    <button onclick="window.location.href='/'">Return Home</button>
+    <div class="feature">
+      <h2>WARNING</h2>
+      <p>This demo is a demostration of Salvus Systems' ability to create easy-to-use references for military and civlian applications. The information held within this page is fake and not to be used for any real-world maintenance. As this is an example, it follows F-16C/D. Therefore any Technical Order (TO) references listed follow that format.<br><br>For information regarding the security behind actual applications, please email <a href="mailto:support@salvussystems.us">support@salvussystems.us</a> <br><br>Click the ⓘ symbol to see why the information of a specific feature is helpful.</p>
+    </div>
+
+    <div id="alert" class="feature">
+      <button class="x-symbol" onclick="document.getElementById('alert').style.display='none';document.getElementById('blurback').style.display='none'">✖</button>
+      <h1 id="alert-name" style="margin-top: -50px"></h1>
+      <p id="alert-desc" style="overflow-y: auto; flex: 1"></p>
+    </div>
+    <div id="blurback"></div>
+
+    <!-- Fuel Load Calculator -->
+    <div class="feature">
+      <h2>Fuel Load Calculator <a class="nounder" href="javascript:openText('Fuel Load Calculator', 'Tactical Aircraft Maintainers (Crew Chiefs), must know exactly how much fuel is required during refuling operations. Without knowing exactly how much fuel is needed and getting an incorrect amount, could mean a shutoff valve is not working correctly. The pilot will then not have enought fuel, resulting in a loss of a sortie.<br><br> The traditional route of confirming the correct fuel load is looking at a chart in the TO. This can be easily changed to a calculator by reading the totalizer, subtracting that number from the max fuel load, and dividing that number by the fuel density.<br><br>This is an improved method because instead of switching between refueling TOs and charts and risking having the wrong chart (different charts for different external fuel tank configurations), this automates the process to decrease the risk of errors and increase efficiency')">ⓘ</a></h2>
+      <select id="config">
+        <option>Slick</option>
+        <option>Wing Tanks</option>
+        <option>Centerline Tank</option>
+        <option>Wing Tanks + Centerline</option>
+      </select>
+      <select id="model">
+        <option>C Model</option>
+        <option>D Model</option>
+      </select>
+      <input type="number" id="fuel-input" placeholder="Amount on Totalizer">
+      <button onclick="submitFuel()">Submit</button>
+      <br>
+      <p id="fuel-output1">JP-8: 0G</p>
+      <p id="fuel-output2">JP-4: 0G</p>
+    </div>
+
+    <!-- Oil Consumption Calculator -->
+    <div class="feature">
+      <h2>Oil Consumption Calculator <a class="nounder" href="javascript:openText('Oil Consumption Calculator', 'This is a simple way to find the maximum oil consupmtion of the engine. If the consupmtion is out of limits the engine must be removed and inspected. According to public sources the F110-GE-100s max oil consumption limit is 1.5 hpts per hour, which is used in this example.')">ⓘ</a></h2>
+      <input id="oil-input" placeholder="Engine Operating Time">
+      <button onclick="submitOil()">Submit</button>
+
+      <p id="oil-output">MAX CONSUMPTION: 0 hpt(s)</p>
+    </div>
+
+    <!-- References -->
+    <div class="feature">
+      <h2>References <a class="nounder" href="javascript:openText('References', 'These features are the main usage of this app. It includes panel charts, cockpit panel charts, theory of operation descriptions, and spatial indexing. Click on the relevant button to see more specifc information.')">ⓘ</a></h2>
+
+      <button onclick="open3D()">3D Tools</button>
+      <button onclick="openRef()">References</button>
+      <button onclick="openSys()">Theory of Operation</button>
+    </div>
+
+    <!-- TO Search -->
+    <div class="feature">
+      <h2>TO Lookup <a class="nounder" href="javascript:openText('TO Lookup', 'A large time consuming portion of a maintainer is finding the right Technical Order (TO). Either for forms or for maintenance procedures. Not every maintenance task is listed in the index TO (00JG-00-1). For example the correct procedures for safety wire is listed in the 00-25-234. The 00JG-00-1 only lists tasks from Job Guides (JG), not from Air Force standard TOs. To the average maintainer, this would be nearly impossible to find.')">ⓘ</a></h2>
+      <input type="text" id="to-input" placeholder="Search">
+      <div id="to-output" class="res"></div>
+    </div>
+
+    <!-- WUC Lookup -->
+    <div class="feature">
+      <h2>WUC Lookup <a class="nounder" href="javascript:openText('WUC Lookup', 'Work Unit Codes (WUC) are used for forms. There are thousands of WUCs and finding the right one can be difficult. This streamlines the process.')">ⓘ</a></h2>
+      <input type="text" id="wuc-input" placeholder="Search">
+      <div id="wuc-output" class="res"></div>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="feature">
+      <h2>Phone Number Search <a class="nounder" href="javascript:openText('Phone Number Search', 'The only way to contact other shops on the flightline is using a radio. The only time maintainers have access to a radio is if they have a flightline vehicle or they are the expeditor. There are dozens of different shops and relying on a maintainer already having that contact is unreliable. This feature has all extensions and phone numbers stored for them.')">ⓘ</a></h2>
+      <input type="text" id="phone-input" placeholder="Search">
+      <div id="phone-output" class="res"></div>
+    </div>
+
+    <!-- Torque Converter -->
+    <div class="feature">
+      <h2>Torque Converter <a class="nounder" href="javascript:openText('Torque Converter', 'When using an inline extension, the actual torque value can change. If a bolt or screw is over-torqued then it can threads can break or the it can shear. If it is under-torqued, then it can come loose in flight. This can ensure the correct torque is applied. The equation is a simple scaling equation so the unit of which is used is irrelevant. The equation is as follows: <br><br><strong>T<sub>applied</sub> = T<sub>setting</sub> × ( (L + E × cos(A)) / L )</strong><p>Where:<br>T<sub>setting</sub> = Setting on torque wrench<br>T<sub>applied</sub> = Desired torque at fastener<br>L = Length of torque wrench (center of handle to drive)<br>E = Length of extension (center of drive to fastener)<br>A = Angle of extension (0deg being directly outward)<br><br>Units are irrelevant because this formula scales T<sub>applied</sub></p>')">ⓘ</a></h2>
+      <canvas id="torque-canvas"></canvas>
+      <input type="text" id="torque-input1" placeholder="Torque Wrench Length">
+      <input type="text" id="torque-input2" placeholder="Extender Length">
+      <input type="text" id="torque-input3" placeholder="Original Torque">
+      <select id="torque-input4">
+        <option>0deg</option>
+        <option>45deg</option>
+        <option>90deg</option>
+        <option>135deg</option>
+        <option>180deg</option>
+        <option>225deg</option>
+        <option>270deg</option>
+        <option>315deg</option>
+      </select>
+      <button onclick="torqueSubmit()">Submit</button>
+      <p id="torque-output">New Torque: 0</p>
+    </div>
+
+    <!-- Popups for features -->
+    <div id="ref" class="popup">
+      <button onclick="document.getElementById('ref').style.display='none'" style="float: right">✖</button>
+      <div> <!-- In the real-word version this is will automatically pull names from a JSON file but for now its hard-coded in -->
+        <button>Description</button>
+      </div>
+      <p>At the top of this page, there are a range of buttons that show simple references about each system (electrical, hydraulic, enviromental, etc). Outside of these system references, this page includes information for day-to-day applications. Including IMDS screen reference and how to do certain tasks on IMDS (serially removing a component, transfering forms from 781A - 781K, etc)</p>
+    </div>
+
+    <div id="top" class="popup">
+      <button onclick="document.getElementById('top').style.display='none'" style="float: right">✖</button>
+      <h2>Theory of Operation</h2>
+      <p>This page includes description of each major system. Increasing the knowledge of maintainers can make quicker turnaround time for required maintenance.</p>
+    </div>
+
+    <div class="feature" style="text-align: center">
+      <p style="margin-top: 0px">SALVUS SYSTEMS LLC © All Rights Reserved</p>
+    </div>
+
+    <script src="three.js"></script>
+    <script src="Orbit.js"></script>
+    <script src="loader.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
