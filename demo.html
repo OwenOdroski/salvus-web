@@ -145,16 +145,29 @@
     }
     #alert {
       z-index: 101;
-      height: auto;
       width: 50%;
       position: fixed;
       top: 50%;
       left: 50%;
       height: 50%;
       transform: translate(-50%, -50%);
-      height: 50%;
       display: none;
       flex-direction: column;
+    }
+    #alert2 {
+      z-index: 101;
+      width: 50%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      height: 200px;
+      transform: translate(-50%, -50%);
+      display: none;
+      flex-direction: column;
+    }
+    #alert2 button {
+      width: 40px;
+      margin-left: auto
     }
     #alert button {
       width: 40px;
@@ -206,8 +219,8 @@
   <body>
     <div class="popup" id="3Dtool">
       <div class="top-bar">
-        <input type="text" placeholder="Search Panel" style="width: 150px; margin-left: 8px; background-color: gray; border: none">
-        <button>Search</button>
+        <input type="text" id="searchPanel" placeholder="Search Panel" style="width: 150px; margin-left: 8px; background-color: gray; border: none">
+        <button onclick="searchPanel()">Search</button>
         <a class="nounder" href="javascript:openText('3D Enviroment', 'The 3D enviroment includes 3 features: 3D panel chart, cockpit panel chart, and spatial index. <br><br> <u>Panel Chart</u><br><br>Panels have a dedicated code on them that maintainers routinely use. This makes it incredibly easy to locate panels. <br><br> <u>Cockpit Panel Chart</u><br><br>This is a 3D model of the cockpit that shows all switched and fault lights. Each switch and fault light has a description of what they do and how they work. Used for knowledge of systems, not troubleshooting advice. <br><br> <u>Spatial Index</u><br><br> This has a 3D model of every major component. It will show part numbers, WUCs, TO references, subcomponents or related components (including their part numbers and applicable TO), and any other related information that would be helpful for a maintainer.')"><div class="thick">ⓘ</div></a>
         <button onclick="document.getElementById('3Dtool').style.display='none'" style="float: right">Close</button>
       </div>
@@ -226,6 +239,13 @@
       <h1 id="alert-name" style="margin-top: -50px"></h1>
       <p id="alert-desc" style="overflow-y: auto; flex: 1"></p>
     </div>
+
+    <div id="alert2" class="feature">
+      <button class="x-symbol" onclick="document.getElementById('alert2').style.display='none';document.getElementById('blurback').style.display='none'">✖</button>
+      <h1 id="alert2-name" style="margin-top: -50px"></h1>
+      <p id="alert2-desc" style="overflow-y: auto; flex: 1"></p>
+    </div>
+
     <div id="blurback"></div>
 
     <!-- Fuel Load Calculator -->
@@ -275,7 +295,7 @@
 
     <!-- WUC Lookup -->
     <div class="feature">
-      <h2>WUC Lookup <a class="nounder" href="javascript:openText('WUC Lookup', 'Work Unit Codes (WUC) are used for forms. There are thousands of WUCs and finding the right one can be difficult. This streamlines the process.')">ⓘ</a></h2>
+      <h2>WUC Lookup <a class="nounder" href="javascript:openText('WUC Lookup', 'Work Unit Codes (WUC) are used for forms. There are thousands of WUCs and finding the right one can be difficult. This streamlines the process. <br>Currently, there are only 2 places that you can find WUCs: the -06 manual and IMDS. If a maintainer does not have access to these it can delay maintenance further.')">ⓘ</a></h2>
       <input type="text" id="wuc-input" placeholder="Search">
       <div id="wuc-output" class="res"></div>
     </div>

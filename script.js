@@ -14,9 +14,12 @@ controls.enableDamping = false;
 const light = new THREE.AmbientLight(0xFFFFFF, 1.4)
 scene.add(light)
 
+const plane = new THREE.Group()
+scene.add(plane)
+
 // Load model of F-16
 loader.load("f16.glb", function(gltf) {
-  scene.add(gltf.scene)
+  plane.add(gltf.scene)
   gltf.scene.children[0].children[0].children[0].children[5].visible = false
 })
 
@@ -26,6 +29,12 @@ function openText(name, desc) {
   document.getElementById('blurback').style.display = 'block'
   document.getElementById('alert-name').textContent = name
   document.getElementById('alert-desc').innerHTML = desc
+}
+function openText2(name, desc) {
+  document.getElementById('alert2').style.display = 'flex'
+  document.getElementById('blurback').style.display = 'block'
+  document.getElementById('alert2-name').textContent = name
+  document.getElementById('alert2-desc').innerHTML = desc
 }
 
 function animate() {
@@ -425,3 +434,73 @@ function searchPhone() {
 
 document.getElementById("phone-input").addEventListener("input", searchPhone);
 searchPhone()
+
+let panels
+
+// Setup panel chart
+async function loadData() {
+  try {
+    const response = await fetch('./data.json');
+    const data = await response.json();
+    panels = data.panels
+
+    // Exterior Panel Chart
+    for(let i = 0; i < data.panels.length; i++) {
+      let mesh = new THREE.Mesh(
+        new THREE.SphereGeometry(1, 10, 10, 10),
+        new THREE.MeshBasicMaterial({color: 0x00FF00})
+      )
+      mesh.name = 'p' + i
+      mesh.position.set(data.panels[i].cords[0], data.panels[i].cords[1], data.panels[i].cords[2])
+      plane.add(mesh)
+    }
+
+    // Interior Panel Chart
+  } catch (error) {
+    console.error('Error loading JSON:', error);
+  }
+}
+loadData();
+
+var raycaster = new THREE.Raycaster()
+var pointer = new THREE.Vector2()
+
+canvas.addEventListener('mousedown', function() {
+  pointer.x = (event.clientX / canvas.clientWidth) * 2 - 1;
+  pointer.y = -(event.clientY / canvas.clientHeight) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+
+  let intersects = raycaster.intersectObjects(plane.children, true)
+
+  if(intersects.length !== 0 && intersects[0].object.name[0] == "p") {
+    let index = intersects[0].object.name.slice(1)
+    let obj = panels[index]
+
+    openText2('Panel Data', "Number: " + obj.number + "<br>Type: " + obj.type)
+  }
+})
+
+function searchPanel() {
+  let input = document.getElementById('searchPanel')
+
+  for(let i in panels) {
+    if(input.value == panels[i].number) {
+      let vec = new THREE.Vector3(panels[i].cords[0], panels[i].cords[1], panels[i].cords[2])
+      let obj = plane.getObjectByName("p" + i)
+      camera.lookAt(vec)
+      controls.target.copy(vec)
+      camera.position.copy(vec)
+
+      camera.position.x *= 1.1
+      camera.position.y *= 1.1
+      camera.position.z *= 1.1
+
+      obj.material.color = new THREE.Color(0xFF0000)
+
+      window.setTimeout(function() {
+        obj.material.color = new THREE.Color(0x00FF00)
+      }, 10000)
+    }
+  }
+}
